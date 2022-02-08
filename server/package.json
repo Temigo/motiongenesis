@@ -17,6 +17,7 @@
     "@koa/cors": "^3.1.0",
     "@koa/router": "^10.1.1",
     "koa": "^2.13.4",
+    "koa-static": "^5.0.0",
     "node-addon-api": "^4.3.0",
     "node-gyp": "^8.4.1"
   }

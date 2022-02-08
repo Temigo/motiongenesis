@@ -1,3 +1,0 @@
-run:
-    web: cd motiongenesis & npm start
-    worker: node server/server.js
