@@ -1,12 +1,20 @@
 # MotionGenesis Prototype
-Requires Node.js v16 or higher.
+Proof-of-concept of running a text command prompt through the browser, interacting with a C++ program in the backend.
+
+Requires Node.js v16 (LTS/Gallium) or higher.
+
+**Demo is available on [Heroku](https://motiongenesis.herokuapp.com/). Check it out!**
+
+The instructions below are only if you want to run everything locally on your computer.
 
 ## Installing tools for development
 Install NVM (Node Version Manager) for easier management of Node.js versions in the long term:
 ```
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 ```
-then install Node.js through NVM:
+Make sure it worked by typing `nvm`. It should print the help information. If not, trying `source ~/.bashrc` again.
+
+Then install Node.js through NVM:
 ```
 $ nvm install v16.13.2
 $ nvm list
@@ -14,25 +22,19 @@ $ nvm use lts/gallium
 ```
 You have to run the last command in any new terminal session to enable Node.js.
 
-Of course, assuming you have GCC or some other standard C++ compiler.
+Of course, we are assuming you have GCC or some other standard C++ compiler.
 
-## Run server
-Serve is based on Koa.js framework. CPP extensions are written with Node API interface.
+## Build & run:
 ```
-$ cd server && npm install
-$ node server.js
+$ git clone https://github.com/Temigo/motiongenesis.git && cd motiongenesis
+$ npm install & npm run build
 ```
-If the C++ code is changed, rebuild with node-gyp
-```
-$ npm run build
-```
+then run the server with `npm start` and the client with `npm run start-client` in 2 different terminals. Go take a look at [http://localhost:3000](http://localhost:3000).
 
-## Run client
-Client is based on React.js.
-```
-$ cd motiongenesis & npm install
-$ npm start
-```
+## Notes
+Server is based on [Koa.js](https://koajs.com/) framework. CPP extensions are written with Node API interface, see [here](https://github.com/nodejs/node-addon-api#api) and [here](https://nodejs.org/api/n-api.html). Client is based on [React.js](https://reactjs.org/).
+
+The front-end code mostly lives in `src/App.js`. The server code lives in `server/server.js`. The C++ code is in `server/hello_world.cc`.
 
 ## Authors
 Temigo
