@@ -1,4 +1,5 @@
 #include <napi.h>
+#include "lib/dummylib/dummylib.h"
 
 using namespace Napi;
 
@@ -20,11 +21,10 @@ Napi::String Method(const Napi::CallbackInfo& info) {
     std::string arg0 = info[0].As<Napi::String>().Utf8Value();
 
     // Do something with the command
-    if (arg0 == "hello") {
-        return Napi::String::New(env, "world");
-    } else {
-        return Napi::String::New(env, "You said, I quote: " + arg0);
-    }
+    auto lib = new DummyLib();
+    std::string output = lib->process(arg0);
+
+    return Napi::String::New(env, output);
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
