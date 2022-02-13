@@ -1,6 +1,6 @@
 html, body, #root, #root>div, .container, .container>div, .react-terminal {
 /*  text-align: center; */
-    height: 100%;
+    height: 100% !important;
 }
 
 .react-terminal-line {
