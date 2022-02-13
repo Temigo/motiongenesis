@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
 import Terminal, { ColorMode, LineType } from 'react-terminal-ui';
-// const { HelloWorld } = require('./build/Release/hello_world_native.node');
-// console.log(HelloWorld)
 const axios = require('axios');
 
-function callBackend(terminalInput) {
-    return axios.get(`${ process.env.REACT_APP_BACKEND_URL }/command/${ terminalInput }`)
+// Wraps up the backend call functionality
+function callBackend(terminalInput, route) {
+    return axios.get(`${ process.env.REACT_APP_BACKEND_URL }/${ route }/${ terminalInput }`)
         .then((response) => {
             if (response.status == 200) {
                 return response.data;
@@ -29,34 +28,18 @@ function App() {
                     name='Motion Genesis Prototype'
                     colorMode={ ColorMode.Dark }
                     lineData={ terminalLineData }
-                    onInput={ (terminalInput) =>
-                        callBackend(terminalInput).then((data) => setTerminalLineData(terminalLineData.concat([
+                    onInput={ (terminalInput) => {
+                        var route = "command";
+                        if (terminalInput == "plot") { route = "array"; }
+                        callBackend(terminalInput, route).then((data) => setTerminalLineData(terminalLineData.concat([
                             { type: LineType.Input, value: terminalInput },
-                            { type: LineType.Output, value: data }
-                        ])))
-                    }
+                            { type: LineType.Output, value: Array.isArray(data) ? data.join('\n') : data }
+                        ])));
+                    } }
                 />
             </div>
         </div>
     );
-  // return (
-  //   <div className="App">
-  //     <header className="App-header">
-  //       <img src={logo} className="App-logo" alt="logo" />
-  //       <p>
-  //         Edit <code>src/App.js</code> and save to reload.
-  //       </p>
-  //       <a
-  //         className="App-link"
-  //         href="https://reactjs.org"
-  //         target="_blank"
-  //         rel="noopener noreferrer"
-  //       >
-  //         Learn React
-  //       </a>
-  //     </header>
-  //   </div>
-  // );
 }
 
 export default App;

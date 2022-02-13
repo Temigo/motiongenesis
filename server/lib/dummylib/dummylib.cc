@@ -1,4 +1,7 @@
+#include <algorithm>
+#include <functional>
 #include <iostream>
+#include <random>
 #include "dummylib.h"
 
 // #if defined(__linux__) || defined(__APPLE__)
@@ -26,4 +29,14 @@ std::string DummyLib::process(const std::string& input) {
     else {
         return "You said, I quote: " + input;
     }
+}
+
+std::vector<float> DummyLib::makeArray(const std::string& input) {
+    const size_t nElements = 20;
+    std::vector<float> output(nElements);
+    std::uniform_real_distribution<float> distribution(0.0f, 1.0f); //Values between 0 and 1
+    std::mt19937 engine; // Mersenne twister MT19937
+    auto generator = std::bind(distribution, engine);
+    std::generate_n(output.begin(), nElements, generator);
+    return output;
 }
