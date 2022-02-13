@@ -4,12 +4,10 @@
 class DummyLib
 {
 public:
-    DummyLib();
+    DummyLib() = default;
     ~DummyLib() = default;
 
     std::string process(const std::string& input);
-    void test();
-    int help;
 };
 
 #endif

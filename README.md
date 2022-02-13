@@ -27,9 +27,10 @@ Of course, we are assuming you have GCC or some other standard C++ compiler.
 ## Build & run:
 ```
 $ git clone https://github.com/Temigo/motiongenesis.git && cd motiongenesis
-$ npm install & npm run build
+$ npm install
+$ npm run build
 ```
-then run the server with `npm start` and the client with `npm run start-client` in 2 different terminals. Go take a look at [http://localhost:3000](http://localhost:3000).
+then run the server with `npm start`. Go take a look at [http://localhost:3001](http://localhost:3001).
 
 ## Notes
 Server is based on [Koa.js](https://koajs.com/) framework. CPP extensions are written with Node API interface, see [here](https://github.com/nodejs/node-addon-api#api) and [here](https://nodejs.org/api/n-api.html). Client is based on [React.js](https://reactjs.org/).

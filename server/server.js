@@ -9,17 +9,14 @@ const { HelloWorld } = require('./build/Release/hello_world_native.node');
 
 // Create Koa app
 const app = new Koa();
-// Serve front-end
+
+// Serve front-end statically
 const buildPath = path.join(__dirname, '..', 'build');
 app.use(serve(buildPath));
 app.use(cors());
 const router = new Router();
 
 // Setup routes
-// router.get('/', (ctx) => {
-//     ctx.body = 'Hello World, welcome to the backend';
-// });
-
 router.get('/command/:text', (ctx) => {
     ctx.body = HelloWorld(ctx.params.text);
 });
