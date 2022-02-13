@@ -1,8 +1,11 @@
-html, body, #root, #root>div, .container, .container>div {
+html, body, #root, #root>div, .container, .container>div, .react-terminal {
 /*  text-align: center; */
     height: 100%;
 }
 
+.react-terminal-line {
+    white-space: pre;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
