@@ -2,25 +2,8 @@
 #include <functional>
 #include <iostream>
 #include <random>
+#include <sstream>
 #include "dummylib.h"
-
-// #if defined(__linux__) || defined(__APPLE__)
-// extern "C"
-// {
-//     DummyLib *allocator() { return new DummyLib(); }
-//
-//     void deleter(DummyLib *ptr) { delete ptr; }
-// }
-// #endif
-//
-// #ifdef WIN32
-// extern "C"
-// {
-//     __declspec (dllexport) DummyLib *allocator() { return new DummyLib(); }
-//
-//     __declspec (dllexport) void deleter(DummyLib *ptr) { delete ptr; }
-// }
-// #endif
 
 std::string DummyLib::process(const std::string& input) {
     if (input == "hello") {
@@ -29,6 +12,28 @@ std::string DummyLib::process(const std::string& input) {
     else {
         return "You said, I quote: " + input;
     }
+}
+
+std::string DummyLib::processArray(const uint8_t* input, size_t length) {
+    std::string out = "Got a file with " + std::to_string(length) + " characters\n";
+    // if (length > 0) {
+    //     out = out + (reinterpret_cast<char *>(input[0]));
+    // }
+    if (length > 0) {
+        std::string content(reinterpret_cast<char const *>(input));
+        std::stringstream file_content(content);
+        std::string line;
+        std::vector<std::string> lines_list;
+        while(std::getline(file_content, line, '\n')) {
+            lines_list.push_back(line);
+            break; // we just want the 1st line
+        }
+        if (lines_list.size() > 0) {
+            out = out + lines_list[0];
+        }
+        // out = out + content;
+    }
+    return out;
 }
 
 std::vector<float> DummyLib::makeArray(const std::string& input) {

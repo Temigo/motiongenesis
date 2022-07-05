@@ -9,6 +9,7 @@ public:
     ~DummyLib() = default;
 
     std::string process(const std::string& input);
+    std::string processArray(const uint8_t* input, size_t length);
     std::vector<float> makeArray(const std::string& input);
 };
 

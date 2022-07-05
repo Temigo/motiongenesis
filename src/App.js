@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import Terminal, { ColorMode, LineType } from 'react-terminal-ui';
 import './App.css';
+import { Button } from 'semantic-ui-react';
 const axios = require('axios');
-
 
 
 // Wraps up the backend call functionality
@@ -52,7 +52,7 @@ function App() {
                     }).then((response) => {
                         if (response.status == 200) {
                             setTerminalLineData(prevTerminalLineData => prevTerminalLineData.concat([{
-                                type: LineType.Output, value: 'Uploaded ' + e.target.currentFile.name + '... ' + response.data + ' lines [done]'
+                                type: LineType.Output, value: 'Uploaded ' + e.target.currentFile.name + '... ' + response.data
                             }]))
                         }
                         else { console.log(response); }

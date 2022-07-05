@@ -6,7 +6,7 @@ const path = require('path');
 const koaBody = require('koa-body');
 
 // Load CPP function using named export
-const { String2String, String2Array } = require('./build/Release/hello_world_native.node');
+const { String2String, String2Array, File2String } = require('./build/Release/hello_world_native.node');
 
 // Create Koa app
 const app = new Koa();
@@ -27,11 +27,17 @@ router.get('/array/:text', (ctx) => {
 router.post('/upload', koaBody(), (ctx, next) => {
     // That contains a big string with the text file content
     // Lines are separated by \n
-    console.log(ctx.request.body.content)
-    let lines = ctx.request.body.content.split('\n');
+    let file_content = ctx.request.body.content;
+    //console.log(file_content);
+    //let lines = ctx.request.body.content.split('\n');
+    //console.log(lines);
+    //console.log(typeof(Buffer.from(lines)));
+    const encoder = new TextEncoder();
+    const uint8array = encoder.encode(file_content);
+    console.log(uint8array);
     // TODO some more checks...
     ctx.status = 200;
-    ctx.body = lines.length;
+    ctx.body = File2String(uint8array.buffer);
 });
 
 app
