@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import Terminal, { ColorMode, LineType } from 'react-terminal-ui';
 import './App.css';
 import { Button } from 'semantic-ui-react';
+import Plot from 'react-plotly.js';
 const axios = require('axios');
 
 
@@ -29,6 +30,9 @@ function App() {
       {type: LineType.Output, value: 'Type `help` to see available commands.'}
     ]);
 
+    const [plot, setPlot] = useState(undefined);
+    const [text, setText] = useState("peace")
+
     const helpString = `
         Help\n
         plot\tSend me an array of numbers.\n
@@ -39,6 +43,23 @@ function App() {
     const help = helpString.map((s) => { return { type: LineType.Output, value: s.trim() }; } );
 
     const filePickerRef = useRef(null);
+    //JP's 1st Buttons
+        const ButtonExampleColored = <div>
+        <Button color='red' onClick={() => setText("Hello World")}>Red</Button>
+        <Button color='orange'>Help</Button>
+        <Button color='yellow'>Yellow</Button>
+        <Button color='olive'>Olive</Button>
+        <Button color='green'>Green</Button>
+        <Button color='teal'>Teal</Button>
+        <Button color='blue'>Blue</Button>
+        <Button color='violet'>Violet</Button>
+        <Button color='purple'>Purple</Button>
+        <Button color='pink'>Pink</Button>
+        <Button color='brown'>Brown</Button>
+        <Button color='grey'>Grey</Button>
+        <Button color='black'>Black</Button>
+      </div>
+
     return (
         <div className="App">
             <div className="container">
@@ -66,6 +87,9 @@ function App() {
                         reader.readAsText(item);
                     });
                 }} />
+                {plot}
+                {ButtonExampleColored}
+                {text}
                 <Terminal
                     name='Motion Genesis Prototype'
                     colorMode={ ColorMode.Dark }
@@ -86,10 +110,22 @@ function App() {
                         else {
                             var route = "command";
                             if (terminalInput == "plot") { route = "array"; }
-                            callBackend(terminalInput, route).then((data) => setTerminalLineData(prevTerminalLineData => prevTerminalLineData.concat([
-                                { type: LineType.Input, value: terminalInput },
-                                { type: LineType.Output, value: Array.isArray(data) ? data.join('\n') : data }
-                            ])));
+                            callBackend(terminalInput, route).then((data) => {
+                                setTerminalLineData(prevTerminalLineData => prevTerminalLineData.concat([
+                                    { type: LineType.Input, value: terminalInput },
+                                    { type: LineType.Output, value: Array.isArray(data) ? data.join('\n') : data }
+                                ]));
+                                console.log(data)
+                                console.log([...Array(data.length).keys()])
+                                setPlot(<Plot data={[
+                                    {
+                                        x: [...Array(data.length).keys()],
+                                        y: data,
+                                        type: 'scatter'
+                                    }
+                                ]} layout={ {width: 320, height: 240, title: 'A Fancy Plot'} } />);
+
+                            });
                         }
                     } }
                 />
